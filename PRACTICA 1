@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+#include <limits>
+
+using namespace std;
+
+int main() {
+    char eleccion;
+    double valorRadio;
+    double calculoResultado;
+
+    cout << "¡Bienvenido a la Calculadora de Círculos!" << endl;
+    cout << "¿Qué te gustaría calcular?" << endl;
+    cout << "  'A' para calcular el Area del circulo" << endl;
+    cout << "  'C' para calcular la Circunferencia del circulo" << endl;
+    cout << "Ingresa tu eleccion (A o C): ";
+    cin >> eleccion;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "Por favor, ingresa el valor del radio del circulo: ";
+    cin >> valorRadio;
+
+    if (valorRadio <= 0) {
+        cout << "Error: El radio debe ser un numero positivo." << endl;
+        return 1;
+    }
+
+    if (eleccion == 'A' || eleccion == 'a') {
+        calculoResultado = M_PI * pow(valorRadio, 2);
+        cout << "El Area del circulo con radio " << valorRadio << " es: " << calculoResultado << endl;
+    } else if (eleccion == 'C' || eleccion == 'c') {
+        calculoResultado = 2 * M_PI * valorRadio;
+        cout << "La Circunferencia del circulo con radio " << valorRadio << " es: " << calculoResultado << endl;
+    } else {
+        cout << "Opcion no valida. Por favor, selecciona 'A' para Area o 'C' para Circunferencia." << endl;
+    }
+
+    cout << "¡Gracias por usar la Calculadora de Círculos!" << endl;
+
+    return 0;
+}
