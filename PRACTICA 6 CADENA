@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+enum EstadoSemaforo { ROJO, VERDE, AMARILLO };
+
+EstadoSemaforo obtenerSiguienteEstado(EstadoSemaforo actual, char evento) {
+    map<pair<EstadoSemaforo, char>, EstadoSemaforo> transiciones;
+
+    transiciones[{ROJO, 't'}] = VERDE;
+    transiciones[{VERDE, 't'}] = AMARILLO;
+    transiciones[{AMARILLO, 't'}] = ROJO;
+
+    if (transiciones.count({actual, evento})) {
+        return transiciones[{actual, evento}];
+    } else {
+        return static_cast<EstadoSemaforo>(-1);
+    }
+}
+
+string obtenerNombreEstado(EstadoSemaforo estado) {
+    switch (estado) {
+        case ROJO:    return "ROJO";
+        case VERDE:  return "VERDE";
+        case AMARILLO: return "AMARILLO";
+        default:     return "ERROR";
+    }
+}
+
+int main() {
+    string secuenciaEventos;
+    cout << "Simulacion de Semaforo: " << endl;
+    cout << "Ingresa una secuencia de eventos ('t' para temporizador, cualquier otra letra para error): ";
+    cin >> secuenciaEventos;
+
+    EstadoSemaforo estadoActual = ROJO;
+    cout << "Estado inicial del semaforo: " << obtenerNombreEstado(estadoActual) << endl;
+
+    for (char caracterEvento : secuenciaEventos) {
+        EstadoSemaforo siguienteEstado = obtenerSiguienteEstado(estadoActual, caracterEvento);
+
+        if (siguienteEstado == static_cast<EstadoSemaforo>(-1)) {
+            cout << "Error: No hay transicion desde " << obtenerNombreEstado(estadoActual)
+                 << " con el evento '" << caracterEvento << "'" << endl;
+            cout << "Simulacion de semaforo TERMINADA INESPERADAMENTE." << endl;
+            return 0;
+        }
+
+        cout << "Evento '" << caracterEvento << "' -> Nuevo estado: " << obtenerNombreEstado(siguienteEstado) << endl;
+        estadoActual = siguienteEstado;
+    }
+
+    cout << "\nSimulacion completada. El semaforo termino en el estado: " << obtenerNombreEstado(estadoActual) << endl;
+
+    if (estadoActual == ROJO) {
+        cout << "El semaforo ha vuelto a su estado inicial ROJO." << endl;
+    }
+
+    return 0;
+}
