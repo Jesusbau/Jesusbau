@@ -1,0 +1,32 @@
+#include <iostream>
+
+int main() {
+    float angulo1, angulo2, angulo3;
+
+    std::cout << "Ingresa el primer angulo del triangulo: ";
+    std::cin >> angulo1;
+
+    std::cout << "Ingresa el segundo angulo del triangulo: ";
+    std::cin >> angulo2;
+
+    std::cout << "Ingresa el tercer angulo del triangulo: ";
+    std::cin >> angulo3;
+
+    if (angulo1 + angulo2 + angulo3 > 179.999 && angulo1 + angulo2 + angulo3 < 180.001) {
+        if (angulo1 > 0 && angulo2 > 0 && angulo3 > 0) {
+            if (angulo1 < 90 && angulo2 < 90 && angulo3 < 90) {
+                std::cout << "El triangulo es acutangulo." << std::endl;
+            } else if (angulo1 == 90 || angulo2 == 90 || angulo3 == 90) {
+                std::cout << "El triangulo es rectangulo." << std::endl;
+            } else {
+                std::cout << "El triangulo es obtusangulo." << std::endl;
+            }
+        } else {
+            std::cout << "Los angulos deben ser positivos para formar un triangulo valido." << std::endl;
+        }
+    } else {
+        std::cout << "Los angulos no forman un triangulo valido (la suma debe ser 180 grados)." << std::endl;
+    }
+
+    return 0;
+}
