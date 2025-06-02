@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Animal {
+protected:
+    string especie;
+    string habitat;
+    bool esDomestico;
+    string sonidoCaracteristico;
+
+public:
+    Animal(string e, string h, bool d, string s) {
+        especie = e;
+        habitat = h;
+        esDomestico = d;
+        sonidoCaracteristico = s;
+    }
+
+    void comer() {
+        cout << "Este animal come para sobrevivir." << endl;
+    }
+
+    void mostrarInfo() {
+        cout << "Especie: " << especie << endl;
+        cout << "Habitat: " << habitat << endl;
+        cout << "Es domestico: " << (esDomestico ? "Si" : "No") << endl;
+        cout << "Sonido: " << sonidoCaracteristico << endl;
+    }
+};
+
+class Pez : public Animal {
+public:
+    Pez(string e, string h, string s)
+        : Animal(e, h, false, s) {}
+};
+
+class Reptil : public Animal {
+public:
+    Reptil(string e, string h, string s)
+        : Animal(e, h, false, s) {}
+};
+
+class Aves : public Animal {
+public:
+    Aves(string e, string h, bool d, string s)
+        : Animal(e, h, d, s) {}
+};
+
+int main() {
+    Pez dorado("Dorado", "Agua Dulce", "Ninguno detectable");
+    Reptil serpiente("Serpiente Cascabel", "Desierto", "Siseo");
+    Aves canario("Canario", "Jaula", true, "Canto");
+
+    cout << "--- Dorado ---" << endl;
+    dorado.mostrarInfo();
+    dorado.comer();
+
+    cout << "\n--- Serpiente ---" << endl;
+    serpiente.mostrarInfo();
+    serpiente.comer();
+
+    cout << "\n--- Canario ---" << endl;
+    canario.mostrarInfo();
+    canario.comer();
+
+    return 0;
+}
