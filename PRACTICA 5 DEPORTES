@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Deporte {
+protected:
+    string nombre;
+    int numeroJugadores;
+    string tipoBalon;
+    string lugarDeJuego;
+
+public:
+    Deporte(string nombre, int jugadores, string balon, string lugar)
+        : nombre(nombre), numeroJugadores(jugadores), tipoBalon(balon), lugarDeJuego(lugar) {}
+
+    virtual void mostrarInfo() {
+        cout << "Nombre del deporte: " << nombre << endl;
+        cout << "Numero de jugadores por equipo: " << numeroJugadores << endl;
+        cout << "Tipo de balon/implemento: " << tipoBalon << endl;
+        cout << "Lugar de juego: " << lugarDeJuego << endl;
+    }
+};
+
+class DeporteDeEquipo : public Deporte {
+private:
+    int duracionPartidoMinutos;
+
+public:
+    DeporteDeEquipo(string nombre, int jugadores, string balon, string lugar, int duracion)
+        : Deporte(nombre, jugadores, balon, lugar), duracionPartidoMinutos(duracion) {}
+
+    void mostrarInfo() override {
+        Deporte::mostrarInfo();
+        cout << "Duracion del partido (minutos): " << duracionPartidoMinutos << endl;
+    }
+};
+
+class DeporteIndividual : public Deporte {
+private:
+    bool requiereOponente;
+
+public:
+    DeporteIndividual(string nombre, string balon, string lugar, bool oponente)
+        : Deporte(nombre, 1, balon, lugar), requiereOponente(oponente) {}
+
+    void mostrarInfo() override {
+        Deporte::mostrarInfo();
+        cout << "¿Requiere oponente?: " << (requiereOponente ? "Si" : "No") << endl;
+    }
+};
+
+int main() {
+    DeporteDeEquipo baloncesto("Baloncesto", 5, "Balon de baloncesto", "Cancha de interior", 40);
+    DeporteIndividual tenis("Tenis", "Pelota de tenis", "Cancha de tenis", true);
+    DeporteDeEquipo voleibol("Voleibol", 6, "Balon de voleibol", "Cancha de interior/playa", 60);
+
+    cout << "--- Informacion de Baloncesto ---" << endl;
+    baloncesto.mostrarInfo();
+
+    cout << "\n--- Informacion de Tenis ---" << endl;
+    tenis.mostrarInfo();
+
+    cout << "\n--- Informacion de Voleibol ---" << endl;
+    voleibol.mostrarInfo();
+
+    return 0;
+}
