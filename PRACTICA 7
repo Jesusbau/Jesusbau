@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+int main() {
+    const double capital = 50000.0;
+    const double tasa_interes_anual = 0.05;
+    const int plazo_anios = 5;
+
+    const double tasa_interes_mensual = tasa_interes_anual / 12.0;
+    const int total_pagos = plazo_anios * 12;
+
+    double pago_mensual = capital * (tasa_interes_mensual * pow(1 + tasa_interes_mensual, total_pagos)) /
+                          (pow(1 + tasa_interes_mensual, total_pagos) - 1);
+
+    std::cout << std::fixed << std::setprecision(2);
+
+    std::cout << "--- Calculadora de Prestamo ---" << std::endl;
+    std::cout << "Monto del Prestamo: $" << capital << std::endl;
+    std::cout << "Tasa de Interes Anual: " << tasa_interes_anual * 100 << "%" << std::endl;
+    std::cout << "Plazo del Prestamo: " << plazo_anios << " años (" << total_pagos << " meses)" << std::endl;
+    std::cout << "Pago Mensual: $" << pago_mensual << std::endl;
+
+    std::cout << "\n--- Calendario de Amortizacion (Primeros 6 Meses) ---" << std::endl;
+    double saldo_restante = capital;
+    double interes_total_pagado = 0.0;
+    double capital_total_pagado = 0.0;
+
+    for (int mes = 1; mes <= total_pagos && mes <= 6; ++mes) {
+        double interes_del_mes = saldo_restante * tasa_interes_mensual;
+        double capital_pagado_este_mes = pago_mensual - interes_del_mes;
+        saldo_restante -= capital_pagado_este_mes;
+
+        interes_total_pagado += interes_del_mes;
+        capital_total_pagado += capital_pagado_este_mes;
+
+        std::cout << "Mes " << mes << ":" << std::endl;
+        std::cout << "  Pago: $" << pago_mensual;
+        std::cout << ", Interes: $" << interes_del_mes;
+        std::cout << ", Capital: $" << capital_pagado_este_mes;
+        std::cout << ", Saldo Restante: $" << saldo_restante << std::endl;
+    }
+
+    double total_pagado_en_plazo = pago_mensual * total_pagos;
+    double interes_total_en_plazo = total_pagado_en_plazo - capital;
+
+    std::cout << "\n--- Resumen del Prestamo ---" << std::endl;
+    std::cout << "Pagos totales realizados: $" << total_pagado_en_plazo << std::endl;
+    std::cout << "Intereses totales pagados: $" << interes_total_en_plazo << std::endl;
+
+    return 0;
+}
