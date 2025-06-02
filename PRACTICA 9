@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<std::string> nombres;
+    std::string nombreIngresado;
+
+    std::cout << "Ingrese 5 nombres:\n";
+
+    for (int i = 0; i < 5; ++i) {
+        std::cout << "Nombre " << i + 1 << ": ";
+        std::cin >> nombreIngresado;
+        nombres.push_back(nombreIngresado);
+    }
+
+    std::sort(nombres.begin(), nombres.end());
+
+    std::cout << "\nNombres ordenados alfabeticamente:\n";
+    for (size_t i = 0; i < nombres.size(); ++i) {
+        std::cout << nombres[i] << std::endl;
+    }
+
+    return 0;
+}
