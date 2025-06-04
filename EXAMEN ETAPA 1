@@ -1,0 +1,66 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std;
+
+enum Fase {
+    APAGADO, ESPERA, REMOJO, ENJUAGUE, VACIADO, SECADO
+};
+
+Fase cicloActual = APAGADO;
+string tipoPrograma = "regular";
+
+void pausar(int segundos) {
+    this_thread::sleep_for(chrono::seconds(segundos));
+}
+
+void actualizarFase(Fase nuevaFase) {
+    cicloActual = nuevaFase;
+
+    switch (cicloActual) {
+        case APAGADO:
+            cout << "Sistema apagado.\n";
+            break;
+        case ESPERA:
+            cout << "Esperando instrucciones...\n";
+            break;
+        case REMOJO:
+            cout << "Iniciando remojo... (30 segundos simulados)\n";
+            pausar(3); // Tiempo simulado
+            actualizarFase(ENJUAGUE);
+            break;
+        case ENJUAGUE:
+            cout << "Proceso de enjuague... (30 minutos simulados)\n";
+            pausar(3);
+            actualizarFase(VACIADO);
+            break;
+        case VACIADO:
+            cout << "Vaciando agua... (5 minutos simulados)\n";
+            pausar(2);
+            if (tipoPrograma != "super delicado") {
+                actualizarFase(SECADO);
+            } else {
+                actualizarFase(APAGADO);
+            }
+            break;
+        case SECADO:
+            cout << "Secando prendas... (20 minutos simulados)\n";
+            pausar(2);
+            actualizarFase(APAGADO);
+            break;
+    }
+}
+
+int main() {
+    cout << "Iniciando sistema de lavado...\n";
+    actualizarFase(ESPERA);
+
+    cout << "Selecciona el tipo de lavado (regular, delicado, super delicado): ";
+    cin >> tipoPrograma;
+
+    actualizarFase(REMOJO);
+
+    cout << "Proceso finalizado.\n";
+    return 0;
+}
